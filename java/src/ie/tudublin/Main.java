@@ -6,8 +6,9 @@ public class Main
     {
         System.out.println("Hello world");
 
+        //Goes into Dog.java
         Animal misty = new Dog("Misty");
-
+        //Goes into Cat.java
         Animal topCat = new Cat("TopCat");
 
         System.out.println(misty);
@@ -19,6 +20,14 @@ public class Main
 
         System.out.println(misty);
         System.out.println(topCat);
+
+        Cat ginger = new Cat("Ginger");
+
+        while(ginger.getLives()!=0)
+        {
+            ginger.kill();
+        }
+    
 
         // What will get printed out??
 
