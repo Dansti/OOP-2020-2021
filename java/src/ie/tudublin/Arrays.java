@@ -4,6 +4,10 @@ import processing.core.PApplet;
 
 public class Arrays extends PApplet {
 
+    private float w;
+    private float h;
+    private float h2;
+
     // This is how the map function works!
     public float map1(float from, float start1, float stop1, float start2, float stop2) {
         float range1 = stop1 - start1;
@@ -39,6 +43,10 @@ public class Arrays extends PApplet {
 
     public void settings() {
         size(500, 500);
+
+        w = width/14.0f;
+        h = map(1.0f, 0.0f, 120.0f, 0, height-(w*2));
+        h2 = map(10.0f, 0.0f, 120.f, 0, height-(w*2));
 
         // Testing the map function
         float f = map1(2, 0, 10, 0, width);
@@ -114,10 +122,12 @@ public class Arrays extends PApplet {
         float w = width / (float) rainfall.length;
         for (int i = 0; i < rainfall.length; i++) {
             noStroke();
-            fill(random(255), 255, 255);
+            fill(random(255), 255, 255); 
             float x = map(i, 0, rainfall.length, 0, width);
             rect(x, height, w, -rainfall[i]);
+            println(x);
         }
+
     }
 
 
@@ -126,13 +136,56 @@ public class Arrays extends PApplet {
         switch (mode) {
             case 0: {
                 // Bar chart
+                float index = 0;
+                stroke(255, 255, 255);
+                line(w, w, w, height-w);
+                for(float r:rainfall) {
+                    fill(w*index, 475-(h*r), h*r);
+                    rect(w+(w*index), height-w-(h*r), w, h*r);
+                    text(months[(int) index],(w*1.3f)+(w*index), height-(w/2));
+                    index++;
+                }
+                stroke(255, 255, 255);
+                for(int i = 0; i < 13; i++) {
+                    line(w/2,height-w-(h2*i), w, height-w-(h2*i));
+                    text(i*10, w/4, height-w-(h2*i));
+                }
                 break;
             }
             case 1: {
                 // Trend line
+                float border = width * 0.1f;
+                float index = 0;
+                stroke(255);
+                line(border, border, border, height - border);
+                line(border, height - border, width - border, height - border);
+                textAlign(CENTER, CENTER);
+                for(float f = 0; f < 120; f += 10) {
+                    float y = map(f, 0, 120, height - border, border);
+                    line(border - 5, y, border, y);
+                    fill(255);
+                    text((int)f, border * 0.5f, y);
+                    text(months[(int) index],(w*1.3f)+(w*index), height-(w/2));
+                    index++;
+                }
+                
+                float w = (width - border * 2)/ (float) rainfall.length;
+
+                for(int i = 1; i< rainfall.length ; i++) {
+
+                    float x1 = map(i, 0, rainfall.length - 1, border + (w * 0.5f), width - border - (w * 0.5f));
+                    float y1 = map(rainfall[i - 1], 0, 120, height - border, border);
+                    float x2 = map(i, 0, rainfall.length - 1, border + (w * 0.5f), width - border - (w * 0.5f));
+                    float y2 = map(rainfall[i], 0, 120, height - border, border);
+
+                    line(x1, y1, x1, y1);
+                    fill(255);
+                }
+                break;
             }
             case 2: {
                 // Pie chart
+                break;
             }
         }
     }
