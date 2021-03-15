@@ -37,7 +37,7 @@ public class Audio1 extends PApplet {
     }
 
     public void keyPressed() {
-        if (keyCode >= '0' && keyCode <= '5') {
+        if (keyCode >= '0' && keyCode <= '6') {
             which = keyCode - '0';
         }
         if (keyCode == ' ') {
@@ -151,6 +151,20 @@ public class Audio1 extends PApplet {
                     lastY = y;
                 }
                 // ??
+                break;
+            }
+            case 6:
+            {
+                for (int i = 0; i < ab.size(); i++) {
+
+                    float c = map(i, 0, ab.size(), 0, 255);
+                    stroke(c, 255, 255);
+                    lerpedBuffer[i] = lerp(lerpedBuffer[i], ab.get(i), 0.1f);        
+                    //line(0, i, lerpedBuffer[i] * halfHeight * 4, i);
+                    //line(width, i, width - (lerpedBuffer[i] * halfHeight * 4), i);
+                    //line(i, 0, i, lerpedBuffer[i] * halfHeight * 4);
+                    //line(i, height, i, height - (lerpedBuffer[i] * halfHeight * 4));
+                }        
                 break;
             }
         }        
